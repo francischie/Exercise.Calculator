@@ -19,6 +19,7 @@ namespace Francis.Calculator.Services.UnitTests
         [InlineData("", 0)]
         [InlineData("5, tytyt", 5)]
         [InlineData("1,2,3,4,5,6,7,8,9,10,11,12", 78)]
+        [InlineData("1\n2,3", 6)]
         public void GetResultTest(string input, int expectedResult)
         {
             var result = _addCalculator.GetResult(input);
