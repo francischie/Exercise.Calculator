@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Francis.Calculator.Services
@@ -10,10 +9,18 @@ namespace Francis.Calculator.Services
 
         public double GetResult(string input)
         {
-            var values = input.Split(Delimeter, StringSplitOptions.RemoveEmptyEntries);
-          
-            var answer = values
+            var values = input.Split(Delimeter, StringSplitOptions.RemoveEmptyEntries)
                 .Select(a => int.TryParse(a, out var result) ? result : 0)
+                .ToList();
+
+            var negativeValues = values
+                .Where(a => a < 0)
+                .ToList();
+            
+            if (negativeValues.Any(a => a < 0))
+                throw new ArgumentException(string.Join(",",  negativeValues));
+            
+            var answer = values
                 .Sum();
  
             return answer;
