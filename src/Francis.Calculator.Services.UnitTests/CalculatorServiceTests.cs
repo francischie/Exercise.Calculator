@@ -13,19 +13,13 @@ namespace Francis.Calculator.Services.UnitTests
         }
         
         [Theory]
-        [InlineData("20", 20)]
-        [InlineData("1,5000", 1)]
-        [InlineData("", 0)]
-        [InlineData("5, tytyt", 5)]
-        [InlineData("1,2,3,4,5,6,7,8,9,10,11,12", 78)]
-        [InlineData("1\n2,3", 6)]
-        [InlineData("2,1001,6", 8)]
-        [InlineData("//[***]\n11***22***33", 66)]
-        [InlineData("//[*][!!][r9r]\n11r9r22*hh*33!!44", 110)]
-
-        public void GetResultTest(string input, int expectedResult)
+        [InlineData("2,,4,rrr,1001,6", "2+0+4+0+0+6 = 12")]
+        [InlineData("20", "20 = 20")]
+        [InlineData("1,1000", "1+1000 = 1001")]
+        [InlineData("//[*][r]1r2,3*4,y,5", "1+2+3+4+0+5 = 15")]
+        public void GetResultTest(string input, string expectedResult)
         {
-            var result = _addCalculator.GetResult(input);
+            var result = _addCalculator.Calculate(input);
             
             Assert.Equal(expectedResult, result);
         }
@@ -33,7 +27,7 @@ namespace Francis.Calculator.Services.UnitTests
         [Fact]
         public void GetResultNegativeExceptionTest()
         {
-            var exception = Assert.Throws<ArgumentException>(() =>  _addCalculator.GetResult("1,-2,3,4,5,-6"));
+            var exception = Assert.Throws<ArgumentException>(() =>  _addCalculator.Calculate("1,-2,3,4,5,-6"));
             
             Assert.Equal("-2,-6", exception.Message);
         }

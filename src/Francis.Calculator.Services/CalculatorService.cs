@@ -5,13 +5,14 @@ namespace Francis.Calculator.Services
 {
     public class CalculatorService
     {
-        private static readonly char[] Delimiter = new[] {'\n', ','};
+        private static readonly char[] Delimiter = {'\n', ','};
         private const int MaxValue = 1000; 
 
-        public double GetResult(string input)
+        public string Calculate(string input)
         {
             var values = input.SplitWithDelimiterExpression(Delimiter)
                 .Select(a => int.TryParse(a, out var result) ? result : 0)
+                .Select(a => a > MaxValue ? 0 : a)
                 .ToList();
 
             var negativeValues = values
@@ -21,12 +22,13 @@ namespace Francis.Calculator.Services
             if (negativeValues.Any(a => a < 0))
                 throw new ArgumentException(string.Join(",",  negativeValues));
             
-            var answer = values
-                .Where(a => a <= MaxValue)
-                .Sum();
- 
-            return answer;
+            var answer = values.Sum();
+
+            var expression = string.Join("+", values) + " = " + answer;
+            return expression;
         }
+
+       
         
     }
 }

@@ -8,8 +8,8 @@ namespace Francis.Calculator.App
         static void Main()
         {
             var calculator = new CalculatorService();
-            var input = "1,5000";
-            Console.WriteLine($"The sum of {input} is : {calculator.GetResult(input)}");
+            var input = "1,1000";
+            Console.WriteLine($"Result : {calculator.Calculate(input)}");
             Console.ReadLine();
         }
         

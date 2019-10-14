@@ -23,7 +23,7 @@ namespace Francis.Calculator.Services
                 stringDelimiter= matches.Concat(delimiter.Select(a => a.ToString())).ToArray();
             }
             
-            return input.Split(stringDelimiter.ToArray(), StringSplitOptions.RemoveEmptyEntries);
+            return input.Split(stringDelimiter.ToArray(), StringSplitOptions.None);
         }
     }
 }
