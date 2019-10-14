@@ -16,8 +16,7 @@ namespace Francis.Calculator.Services
             {
                 var pattern = @"\[(.*?)\]";
                 var matches = Regex.Matches(input, pattern)
-                    .Select(a => a.ToString().Replace("[","").Replace("]",""))
-                    .Take(1);
+                    .Select(a => a.ToString().Replace("[", "").Replace("]", ""));
                 var lastIndex = input.LastIndexOf(']');
                 input = input.Substring(lastIndex > -1 ? lastIndex + 1 : 0);
 
