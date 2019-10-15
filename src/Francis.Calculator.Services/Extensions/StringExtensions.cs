@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Francis.Calculator.Services
+namespace Francis.Calculator.Services.Extensions
 {
     public  static class StringExtensions
     {
