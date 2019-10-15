@@ -3,9 +3,15 @@ using System.Linq;
 
 namespace Francis.Calculator.Services
 {
-    public class CalculatorService
+    public class CalculatorService : ICalculatorService
     {
         private static readonly char[] Delimiter = {'\n', ','};
+        private readonly IOperation _operation;
+
+        public CalculatorService(IOperation operation)
+        {
+            _operation = operation;
+        }
 
         public string Calculate(string input, string[] alternateDelimiter = null, bool allowNegative = false, int maxValue  = 0)
         {
@@ -29,11 +35,8 @@ namespace Francis.Calculator.Services
                 if (negativeValues.Any(a => a < 0))
                     throw new ArgumentException(string.Join(",", negativeValues));
             }
-
-            var answer = values.Sum();
-
-            var expression = string.Join("+", values.Select(a => a < 0 ? $"({a})" : a.ToString())) + " = " + answer;
-            return expression;
+            
+            return _operation.GetExpression(values);
         }
 
        

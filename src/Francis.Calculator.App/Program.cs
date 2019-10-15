@@ -1,5 +1,6 @@
 ﻿using System;
 using Francis.Calculator.Services;
+using Microsoft.Extensions.DependencyInjection; 
 
 namespace Francis.Calculator.App
 {
@@ -7,7 +8,12 @@ namespace Francis.Calculator.App
     {
         static void Main()
         {
-            var calculator = new CalculatorService();
+            var services = new ServiceCollection()
+                .AddTransient<IOperation, AddOperation>()
+                .AddTransient<ICalculatorService, CalculatorService>()
+                .BuildServiceProvider();
+            
+            var calculator = services.GetService<ICalculatorService>();
             do
             {
                 var input = Console.ReadLine();

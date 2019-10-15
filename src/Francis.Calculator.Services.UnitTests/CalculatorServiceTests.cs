@@ -1,4 +1,6 @@
 using System;
+using System.Security.Authentication.ExtendedProtection;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace Francis.Calculator.Services.UnitTests
@@ -9,7 +11,11 @@ namespace Francis.Calculator.Services.UnitTests
 
         public CalculatorServiceTests()
         {
-            _addCalculator = new CalculatorService();
+            var services = new ServiceCollection()
+                .AddTransient<IOperation, AddOperation>()
+                .BuildServiceProvider();
+            
+            _addCalculator = ActivatorUtilities.GetServiceOrCreateInstance<CalculatorService>(services);
         }
         
         [Theory]
